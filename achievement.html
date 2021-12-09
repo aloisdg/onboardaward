@@ -104,6 +104,10 @@
       </li>
     </template>
 
+    <template id="ctaAskAFriend">
+      <button>Ask a friend</button>
+    </template>
+
     <script>
       // https://steamcommunity.com/id/wolfdall/stats/367520?xml=1
       const steamResponse = {
@@ -846,18 +850,23 @@
 
       const fillTemplate = (achievement) => {
         const clone = document.importNode(template.content, true);
-        const td = clone.querySelectorAll("section");
-        td[0].firstElementChild.src = achievement.image;
-        td[1].textContent = achievement.description;
-        td[2].textContent = achievement.closed
-          ? convertTimestamp(achievement.unlockTimestamp)
-          : "";
+        const col = clone.querySelectorAll("section");
+        col[0].firstElementChild.src = achievement.image;
+        col[1].textContent = achievement.description;
+
+        if (achievement.closed){
+          col[2].textContent =  convertTimestamp(achievement.unlockTimestamp);
+        }
+        else {
+          col[2].appendChild(document.importNode(askAFriend.content, true));
+        }
         return clone;
       };
 
       const tbody = document.querySelector("#achievementBody");
       const template = document.querySelector("#achievementRow");
       const progress = document.querySelector("#progress");
+      const askAFriend = document.querySelector("#ctaAskAFriend");
 
       achievements.map(fillTemplate).forEach((clone) => {
         tbody.appendChild(clone);
