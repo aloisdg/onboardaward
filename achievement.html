@@ -8,8 +8,11 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
     />
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏅</text></svg>">
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏅</text></svg>"
+    />
     <style>
       .gray {
         color: var(--form-placeholder);
@@ -69,24 +72,35 @@
     <header><h1>🏅 Onboardaward</h1></header>
 
     <main>
-      <div class="relative border-dark">
+      <div style="display: flex; align-items: center; margin-bottom: 1rem; margin-top: 2rem;">
+        <img
+          src="https://images.pexels.com/users/avatars/224453/andrea-piacquadio-138.jpeg?auto=compress&fit=crop&h=256&w=256"
+          alt="avatar"
+          style="margin-right: 1rem; width: 8rem; height: 8rem; border-radius: 50%"
+        />
+        <div>
+          <h2 style="margin-top: 12px;">John Doe</h2>
+          <h3  style="margin-top: 0;">Account Manager</h3>
+        </div>
+      </div>
 
+      <div class="relative border-dark" style="color: var(--code);">
         <div id="percent" class="absolute bg-dark" style="height: 24px"></div>
         <div id="progress" class="relative"></div>
       </div>
-      
+
       <ol id="achievementBody"></ol>
     </main>
 
-    <footer>
-      ok
-    </footer>
+    <footer>ok</footer>
 
     <template id="achievementRow">
       <li class="grid grid-auto-2-1 mb-2">
         <section class="mr-2"><img src="" /></section>
         <section class="p2 flex align-center bg-dark"></section>
-        <section class="p2 flex align-center bg-dark gray justify-right"></section>
+        <section
+          class="p2 flex align-center bg-dark gray justify-right"
+        ></section>
       </li>
     </template>
 
@@ -852,9 +866,8 @@
       const closedCount = achievements.filter((x) => x.closed).length;
       const totalCount = achievements.length;
       const percentCount = Math.round((closedCount / totalCount) * 100);
-      progress.textContent = `${closedCount} of ${totalCount} (${percentCount}%) achievements earned:`;
+      progress.textContent = `${closedCount} of ${totalCount} (${percentCount}%) achievements earned`;
       percent.style.width = `${percentCount}%`;
-      
     </script>
   </body>
 </html>
