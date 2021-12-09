@@ -343,13 +343,13 @@
             li.parentElement.insertBefore(
               fillTemplate({
                 closed: true,
-                description: "whatever",
+                description: achievement.description,
                 unlockTimestamp: Date.now(),
-                type: achievementImages["meetup"],
+                type: achievement.type,
               }),
               li.nextSibling
             );
-            // li.parentElement.removeChild(li); 
+            li.parentNode.removeChild(li); 
           };
           col[2].appendChild(localButton);
           col[0].firstElementChild.style.filter = "grayscale(1)";
