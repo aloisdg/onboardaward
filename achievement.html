@@ -21,7 +21,7 @@
         display: grid;
       }
       .grid-auto-2-1 {
-        grid-template-columns: auto 2fr 1fr;
+        grid-template-columns: auto 2fr 2fr;
       }
 
       .p2 {
@@ -137,6 +137,28 @@
 
     <template id="ctaAskAFriend">
       <button
+        id="done"
+        style="
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+          display: flex;
+          align-items: center;
+        "
+      >
+        Done
+        <div
+          style="
+            height: 35px;
+            margin-left: 0.5rem;
+            display: flex;
+            align-items: center;
+          "
+        >
+          ✔️
+        </div>
+      </button>
+      <button
+        id="ask"
         style="
           padding-left: 0.5rem;
           padding-right: 0.5rem;
@@ -314,8 +336,21 @@
 
           localButton.querySelector("img").src = achievement.type.buddyImage;
           localButton
-            .querySelector("button")
+            .querySelector("#ask")
             .setAttribute("data-mail", achievement.type.buddy);
+          localButton.querySelector("#done").onclick = (e) => {
+            const li = e.target.parentElement.parentElement;
+            li.parentElement.insertBefore(
+              fillTemplate({
+                closed: true,
+                description: "whatever",
+                unlockTimestamp: Date.now(),
+                type: achievementImages["meetup"],
+              }),
+              li.nextSibling
+            );
+            // li.parentElement.removeChild(li); 
+          };
           col[2].appendChild(localButton);
           col[0].firstElementChild.style.filter = "grayscale(1)";
         }
