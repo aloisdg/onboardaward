@@ -72,7 +72,7 @@
       }
     </style>
   </head>
-  <body>
+  <body style="position: relative">
     <header><h1>🏅 Onboardaward</h1></header>
 
     <main>
@@ -122,6 +122,21 @@
         <a href="https://github.com/aloisdg/onboardaward">Onboardaward</a>
       </div>
     </footer>
+
+    <div
+      id="congrats"
+      style="
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      "
+    >
+      <img
+        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcondaluna.com%2Fassets%2Fstickers%2Fcongrats.gif&f=1&nofb=1"
+      />
+    </div>
 
     <template id="achievementRow">
       <li class="grid grid-auto-2-1 mb-2">
@@ -323,6 +338,13 @@
         // @ ${date.toLocaleTimeString()}`
       };
 
+      const congrats = () => {
+        document.querySelector("#congrats").style.display = "block";
+        setTimeout(() => {
+          document.querySelector("#congrats").style.display = "none";
+        }, 1000);
+      };
+
       const fillTemplate = (achievement) => {
         const clone = document.importNode(template.content, true);
         const col = clone.querySelectorAll("section");
@@ -335,8 +357,7 @@
           const localButton = document.importNode(askAFriend.content, true);
 
           localButton.querySelector("img").src = achievement.type.buddyImage;
-          const askButton = localButton
-            .querySelector("#ask");
+          const askButton = localButton.querySelector("#ask");
           askButton.setAttribute("data-mail", achievement.type.buddy);
           localButton.querySelector("#done").onclick = (e) => {
             const li = e.target.parentElement.parentElement;
@@ -349,15 +370,19 @@
               }),
               li.nextSibling
             );
-            li.parentNode.removeChild(li); 
+            congrats();
+            li.parentNode.removeChild(li);
           };
           col[2].appendChild(localButton);
           col[0].firstElementChild.style.filter = "grayscale(1)";
 
           askButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.setAttribute('href', `mailto:${achievement.type.buddy}?subject=Need help on ${achievement.description}`);
-            link.click();            
+            link.setAttribute(
+              "href",
+              `mailto:${achievement.type.buddy}?subject=Need help on ${achievement.description}`
+            );
+            link.click();
           });
         }
         return clone;
