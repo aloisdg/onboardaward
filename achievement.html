@@ -133,9 +133,7 @@
         transform: translate(-50%, -50%);
       "
     >
-      <img
-        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcondaluna.com%2Fassets%2Fstickers%2Fcongrats.gif&f=1&nofb=1"
-      />
+      <img src="" />
     </div>
 
     <template id="achievementRow">
@@ -338,11 +336,27 @@
         // @ ${date.toLocaleTimeString()}`
       };
 
+      const congratImages = [
+        "https://user-images.githubusercontent.com/3449303/145452536-24e5fa9e-9259-47c5-9392-005b41c7a068.gif",
+        "https://user-images.githubusercontent.com/3449303/145452080-89f16fa9-cdd7-48e4-9c85-3753e726f25d.gif",
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcondaluna.com%2Fassets%2Fstickers%2Fcongrats.gif&f=1&nofb=1",
+        "https://user-images.githubusercontent.com/3449303/145451015-8b31da0a-93f1-4082-8762-866f7a825809.gif",
+        "https://user-images.githubusercontent.com/3449303/145451177-24a13b1d-d847-4a97-9405-4de013cb5103.gif",
+        "https://user-images.githubusercontent.com/3449303/145451322-9eee6136-7efe-465f-8c0d-4908f216f62f.gif",
+      ];
+
       const congrats = () => {
-        document.querySelector("#congrats").style.display = "block";
-        setTimeout(() => {
-          document.querySelector("#congrats").style.display = "none";
-        }, 1000);
+        const url =
+          congratImages[Math.floor(Math.random() * congratImages.length)];
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          document.querySelector("#congrats img").src = url;
+          document.querySelector("#congrats").style.display = "block";
+          setTimeout(() => {
+            document.querySelector("#congrats").style.display = "none";
+          }, 1600);
+        };
       };
 
       const fillTemplate = (achievement) => {
@@ -365,7 +379,7 @@
               fillTemplate({
                 closed: true,
                 description: achievement.description,
-                unlockTimestamp: Date.now()/1000,
+                unlockTimestamp: Date.now() / 1000,
                 type: achievement.type,
               }),
               li.nextSibling
