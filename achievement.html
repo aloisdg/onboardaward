@@ -81,7 +81,8 @@
         "
       >
         <img
-          src="https://user-images.githubusercontent.com/9153252/145385925-1f67e6be-4505-4c96-b6a6-2d140cee3391.jpeg"
+          id="avatar"
+          src=""
           alt="avatar"
           style="
             margin-right: 1rem;
@@ -91,8 +92,8 @@
           "
         />
         <div>
-          <h2 style="margin-top: 12px">Jane Doe</h2>
-          <h3 style="margin-top: 0">Account Manager</h3>
+          <h2 id="firstName" style="margin-top: 12px"></h2>
+          <h3 id="title" style="margin-top: 0"></h3>
         </div>
       </div>
 
@@ -157,50 +158,92 @@
     </template>
 
     <script>
-      // https://steamcommunity.com/id/wolfdall/stats/367520?xml=1
-      const steamResponse = {
-        playerstats: {
-          achievements: {
-            achievement: [
-              {
-                description: "Acquire your first Charm",
-                unlockTimestamp: "1588265392",
-                _closed: "1",
-                type: "meetup",
-              },
-              {
-                description: "Acquire half of Hallownest's Charms",
-                unlockTimestamp: "1589923164",
-                _closed: "1",
-                type: "meetup",
-              },
-              {
-                description:
-                  "Acquire all Charms and receive Salubra's blessing",
-                unlockTimestamp: "1628250315",
-                _closed: "1",
-                type: "code",
-              },
-              {
-                description: "Acquire 4 Mask Shards",
-                unlockTimestamp: "1589720283",
-                _closed: "1",
-                type: "twitter",
-              },
-              {
-                description: "Speak at a meetup",
-                _closed: "0",
-                type: "meetup",
-              },
-              {
-                description: "Recommand someone to HR",
-                _closed: "0",
-                type: "hr",
-              },
-            ],
-          },
+      const people = [
+        {
+          firstName: "Jane Doe",
+          title: "Account Manager",
+          image:
+            "https://user-images.githubusercontent.com/9153252/145385925-1f67e6be-4505-4c96-b6a6-2d140cee3391.jpeg",
+          achievements: [
+            {
+              description: "Acquire your first Charm",
+              unlockTimestamp: "1588265392",
+              _closed: "1",
+              type: "meetup",
+            },
+            {
+              description: "Acquire half of Hallownest's Charms",
+              unlockTimestamp: "1589923164",
+              _closed: "1",
+              type: "meetup",
+            },
+            {
+              description: "Acquire all Charms and receive Salubra's blessing",
+              unlockTimestamp: "1628250315",
+              _closed: "1",
+              type: "code",
+            },
+            {
+              description: "Acquire 4 Mask Shards",
+              unlockTimestamp: "1589720283",
+              _closed: "1",
+              type: "twitter",
+            },
+            {
+              description: "Speak at a meetup",
+              _closed: "0",
+              type: "meetup",
+            },
+            {
+              description: "Recommand someone to HR",
+              _closed: "0",
+              type: "hr",
+            },
+          ],
         },
-      };
+        {
+          firstName: "Nick Claus",
+          title: "Senior Engineer",
+          image:
+            "https://user-images.githubusercontent.com/9153252/145385932-f14d2cb7-723f-4a75-b62e-3e7f1bc53953.jpeg",
+          achievements: [
+            {
+              description: "Acquire your first Charm",
+              unlockTimestamp: "1588265392",
+              _closed: "1",
+              type: "meetup",
+            },
+            {
+              description: "Acquire half of Hallownest's Charms",
+              unlockTimestamp: "1589923164",
+              _closed: "1",
+              type: "meetup",
+            },
+            {
+              description: "Acquire all Charms and receive Salubra's blessing",
+              unlockTimestamp: "1628250315",
+              _closed: "1",
+              type: "code",
+            },
+            {
+              description: "Acquire 4 Mask Shards",
+              unlockTimestamp: "1589720283",
+              _closed: "1",
+              type: "twitter",
+            },
+            {
+              description: "Speak at a meetup",
+              _closed: "0",
+              type: "meetup",
+            },
+            {
+              description: "Recommand someone to HR",
+              _closed: "0",
+              type: "hr",
+            },
+          ],
+        },
+      ];
     </script>
 
     <script>
@@ -237,13 +280,16 @@
     </script>
 
     <script>
-      const achievements =
-        steamResponse.playerstats.achievements.achievement.map((x) => ({
-          description: x.description,
-          unlockTimestamp: x.unlockTimestamp,
-          closed: x._closed === "1",
-          type: achievementImages[x.type],
-        }));
+      const id = 1;
+      avatar.src = people[id].image;
+      firstName.textContent = people[id].firstName;
+      title.textContent = people[id].title;
+      const achievements = people[id].achievements.map((x) => ({
+        description: x.description,
+        unlockTimestamp: x.unlockTimestamp,
+        closed: x._closed === "1",
+        type: achievementImages[x.type],
+      }));
 
       const convertTimestamp = (timestamp) => {
         const date = new Date(timestamp * 1000);
