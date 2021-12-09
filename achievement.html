@@ -66,6 +66,10 @@
       .justify-right {
         justify-content: right;
       }
+
+      .justify-center {
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
@@ -105,9 +109,8 @@
       <ol id="achievementBody"></ol>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark">
-      <div class="align-center">
+    <footer class="flex justify-center">
+      <div>
         <span class="">Vote for Onboardaward</span>
         <a
           href="https://github.com/aloisdg/onboardaward"
@@ -115,15 +118,10 @@
           target="_blank"
           >Join us on Github</a
         >
-      </div>
-      <!-- Copyright -->
-      <div class="align-center">
         © 2021 Copyright:
         <a href="https://github.com/aloisdg/onboardaward">Onboardaward</a>
       </div>
-      <!-- Copyright -->
     </footer>
-    <!-- Footer -->
 
     <template id="achievementRow">
       <li class="grid grid-auto-2-1 mb-2">
@@ -147,7 +145,7 @@
         "
         data-mail=""
       >
-        <span>Let me help</span>
+        <span>Let me help you</span>
         <img
           src=""
           height="35"
