@@ -126,7 +126,7 @@
     <template id="achievementRow">
       <li class="grid grid-auto-2-1 mb-2">
         <section class="mr-2">
-          <img style="width: 64px; height: 64px; object-fit: cover" src="" />
+          <img style="width: 77px; height: 77px; object-fit: cover" src="" />
         </section>
         <section class="p2 flex align-center bg-dark"></section>
         <section
@@ -344,7 +344,7 @@
               fillTemplate({
                 closed: true,
                 description: achievement.description,
-                unlockTimestamp: Date.now(),
+                unlockTimestamp: Date.now()/1000,
                 type: achievement.type,
               }),
               li.nextSibling
