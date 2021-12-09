@@ -1,0 +1,860 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Achievement</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏅</text></svg>">
+    <style>
+      .gray {
+        color: var(--form-placeholder);
+      }
+      .grid {
+        display: grid;
+      }
+      .grid-auto-2-1 {
+        grid-template-columns: auto 2fr 1fr;
+      }
+
+      .p2 {
+        padding: 0.5rem;
+      }
+
+      .mb-2 {
+        padding-bottom: 0.5rem;
+      }
+
+      .flex {
+        display: flex;
+      }
+      .align-center {
+        align-items: center;
+      }
+
+      .mr-2 {
+        margin-right: 0.5rem;
+      }
+
+      .bg-dark {
+        background-color: var(--background);
+      }
+
+      .border-dark {
+        border: 3px solid var(--background);
+      }
+
+      ol {
+        padding-left: 0;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .absolute {
+        position: absolute;
+      }
+
+      .justify-right {
+        justify-content: right;
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>🏅 D-edgievement</h1></header>
+
+    <main>
+      <div class="relative border-dark">
+
+        <div id="percent" class="absolute bg-dark" style="height: 24px"></div>
+        <div id="progress" class="relative"></div>
+      </div>
+      
+      <ol id="achievementBody"></ol>
+    </main>
+
+    <footer>
+      ok
+    </footer>
+
+    <template id="achievementRow">
+      <li class="grid grid-auto-2-1 mb-2">
+        <section class="mr-2"><img src="" /></section>
+        <section class="p2 flex align-center bg-dark"></section>
+        <section class="p2 flex align-center bg-dark gray justify-right"></section>
+      </li>
+    </template>
+
+    <script>
+      // https://steamcommunity.com/id/wolfdall/stats/367520?xml=1
+      const steamResponse = {
+        playerstats: {
+          privacyState: "public",
+          visibilityState: "3",
+          game: {
+            gameFriendlyName: "367520",
+            gameName: "Hollow Knight",
+            gameLink: "https://steamcommunity.com/app/367520",
+            gameIcon:
+              "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7b87aecda896ae747a6e40e3eb63498cb8b84df2.jpg",
+            gameLogo:
+              "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/capsule_184x69.jpg",
+            gameLogoSmall:
+              "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/capsule_184x69.jpg",
+          },
+          player: {
+            steamID64: "76561197989836064",
+            customURL: "wolfdall",
+          },
+          stats: {
+            hoursPlayed: "0",
+          },
+          achievements: {
+            achievement: [
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6d15e62c48ba57d23e72b8f24fb775a44223cb8f.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/8342f6c2630943b056978593315dfb8676e5bbd9.jpg",
+                name: "Charmed",
+                apiname: "charmed",
+                description: "Acquire your first Charm",
+                unlockTimestamp: "1588265392",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/70ff5ba41548568aad51c3bd0d4a53d5c17399ed.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/16cab0ef2c0b0acac9779a6cd9776158faa77a8a.jpg",
+                name: "Enchanted",
+                apiname: "enchanted",
+                description: "Acquire half of Hallownest's Charms",
+                unlockTimestamp: "1589923164",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/d53ad10288be837b8aab693b8fcc6549960460f1.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a577316f7ae64c8cfdd0568209a915a9fad0f8ad.jpg",
+                name: "Blessed",
+                apiname: "blessed",
+                description:
+                  "Acquire all Charms and receive Salubra's blessing",
+                unlockTimestamp: "1628250315",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/2461c5d7f6595602443a0bf0da24f48795873671.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4764a78f55fbf49a82f479414a1198d182bcb43d.jpg",
+                name: "Protected",
+                apiname: "protected",
+                description: "Acquire 4 Mask Shards",
+                unlockTimestamp: "1589720283",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/bc53e3b71da8b6997a92ee2085f8029daa520d17.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6073f18f0da90c88ce535826b716ddc098723ae7.jpg",
+                name: "Masked",
+                apiname: "masked",
+                description: "Acquire all Mask Shards",
+                unlockTimestamp: "1628252512",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4913c263116ee38deb0a17c724e04cda290210e0.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/83ad82ce253a66e89e6ee51eb37db2fd0f781e10.jpg",
+                name: "Soulful",
+                apiname: "soulful",
+                description: "Acquire 3 Vessel Fragments",
+                unlockTimestamp: "1589993522",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9093ee5b02a988b32deedd9fe89b72c733ba0bf6.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7830df3185b0252edd0e4830da6dcc008b162541.jpg",
+                name: "Worldsoul",
+                apiname: "worldsoul",
+                description: "Acquire all Vessel Fragments",
+                unlockTimestamp: "1628240187",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/ef1f6b825646067c63f5703d1c7ba38b52d94259.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e92b8a9b1382393740a658d9ece0bcad21d0bb03.jpg",
+                name: "Falsehood",
+                apiname: "fk_defeat",
+                description: "Defeat the False Knight",
+                unlockTimestamp: "1589109543",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4d81411b14d5537f01df55ace0b63494875de2fc.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9f449ef6aacd0ef2423439931ef68466cd762456.jpg",
+                name: "Strength",
+                apiname: "dream_fk",
+                description: "Defeat the Failed Champion",
+                unlockTimestamp: "1628111653",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/341793aae218e6b14c571ee2daf55b87cf11a784.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/80ba52f035a3418b241c62c1eae7c924ec5705e8.jpg",
+                name: "Test of Resolve",
+                apiname: "hornet_1",
+                description: "Defeat Hornet in Greenpath",
+                unlockTimestamp: "1589707381",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/55742641984670952a75a1b80f3380bc85a8fcce.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/ce3e486770249d317f47c8277de5e7047d175cb0.jpg",
+                name: "Proof of Resolve",
+                apiname: "hornet_2",
+                description: "Defeat Hornet in Kingdom's Edge",
+                unlockTimestamp: "1590595394",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/2d3e4c6217b6d911d8a211f3ab4f3f37e49a584c.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4f4fedac5e0f99fe9ac8d849296fbe6a202cdb5e.jpg",
+                name: "Illumination",
+                apiname: "soul_master_defeat",
+                description: "Defeat the Soul Master",
+                unlockTimestamp: "1590096164",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/fe4da7f785348feab3845233c0050d660b23c9d7.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/b252c4bde96e9b00acc82780dd4aa32b26a5253b.jpg",
+                name: "Release",
+                apiname: "broken_vessel",
+                description: "Defeat the Broken Vessel",
+                unlockTimestamp: "1590228900",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/c1d1c0d98374a06efa17e183ef3121ac6c8cc156.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1eb53b3fb180df87b48b07a5898aeb8b872b49d4.jpg",
+                name: "Peace",
+                apiname: "dream_broken_vessel",
+                description: "Defeat the Lost Kin",
+                unlockTimestamp: "1590339566",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7505670c8e4283da41ce575341bc35f72ff2639b.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/c98d546145ff3a8b0eed20ca5426b94d714127bd.jpg",
+                name: "Honour",
+                apiname: "dung_defender",
+                description: "Defeat the Dung Defender",
+                unlockTimestamp: "1590387267",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1a695a0e9bf011f800f3a52e4a04a02776011765.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1720e3ef2802441c9f6f3d4b3ae62ba05109ec1c.jpg",
+                name: "Respect",
+                apiname: "mantis_lords",
+                description: "Defeat the Mantis Lords",
+                unlockTimestamp: "1590100558",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a39ee369bc9d5dc54d419ad7cae6c1dd346fc632.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/109bb2a566d9a5841d634ac4cf778b0bb5421eb6.jpg",
+                name: "Obsession",
+                apiname: "collector",
+                description: "Defeat the Collector",
+                unlockTimestamp: "1590425824",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e8a35f548dcdeb1753fdc880a2df6de8fe245c8e.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/00938958cda9497220f141c415a7ca7bdcdd27e7.jpg",
+                name: "Rivalry",
+                apiname: "zote",
+                description: "Defeat Zote in the Colosseum of Fools",
+                unlockTimestamp: "1590512138",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a0864e337fe427586613b09e8799109deccdbcf4.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/8415033a505e66a207bc4c34229154e8c860d73c.jpg",
+                name: "Attunement",
+                apiname: "attunement",
+                description: "Collect 600 Essence",
+                unlockTimestamp: "1589912138",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e8f543149d1ccfe831740ad989260d15e57a4de0.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/d1f3d14cf7b0b0cf8a7bb4a71a43f5c950fd982c.jpg",
+                name: "Awakening",
+                apiname: "awakening",
+                description: "Collect 1800 Essence and awaken the Dream Nail",
+                unlockTimestamp: "1590425824",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/054a9800b71efbf708869cb55f611658ecffa2f3.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1b88bf9ae2b7d4b90ea3ad86470c98df618a8229.jpg",
+                name: "Ascension",
+                apiname: "ascension",
+                description:
+                  "Collect 2400 Essence and hear the Seer's final words",
+                unlockTimestamp: "1628240336",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7d3e6f275570f47e11c53342e989bc70152789cf.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/585f5c9dc4d8fc9a7ba24c808e184837fa1c28c4.jpg",
+                name: "Grubfriend",
+                apiname: "grubfriend",
+                description: "Rescue half of the imprisoned grubs",
+                unlockTimestamp: "1590170872",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/378ed9b1dcccd43bfbf39295b17caad3fb398c64.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a1a99a2d1308a47ea46df2eff56301584d070246.jpg",
+                name: "Metamorphosis",
+                apiname: "metamorphosis",
+                description: "Rescue all of the imprisoned grubs",
+                unlockTimestamp: "1590518863",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/c0bf9a28a5aed3500c2409e1699d8b3cf041dbfd.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/512e98007863df71f4531d08676464c6aceea95d.jpg",
+                name: "Neglect",
+                apiname: "neglect",
+                description: "Leave Zote to die",
+                unlockTimestamp: "1628628421",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/bc17dc680e57f3a108d964f171388109b3dd02e2.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/23f190fe7fdc961652855d6134a096b2703bf479.jpg",
+                name: "Purity",
+                apiname: "nailsmith_kill",
+                description: "Slay the Nailsmith with the Pure Nail",
+                unlockTimestamp: "1590556001",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/39c48696aca3c6ccf64eb4a069ab6a44971308a4.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/2a2f11ae513ba698b9fde0790f82f9a1292176d9.jpg",
+                name: "Happy Couple",
+                apiname: "nailsmith_spare",
+                description: "Allow the Nailsmith to find a new calling",
+                unlockTimestamp: "1628628972",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/b2de92ce9fadeae94fc2b25f116a95ff575047d2.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/bebc7daebbce3dd0cef06f83e0b4ae69975062cc.jpg",
+                name: "Witness",
+                apiname: "quirrel_epilogue",
+                description: "Spend a final moment with Quirrel",
+                unlockTimestamp: "1628250315",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/5599c786f2c5a411951563f33abed35f08ad76e4.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/b85715be313f8be45edaebbdf16d6d794766da24.jpg",
+                name: "Solace",
+                apiname: "mourner",
+                description: "Bring peace to the Grey Mourner",
+                unlockTimestamp: "1628252502",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e7205c4c78fefef7894a6731d1a188e992011ec8.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9204e1e5c4d80aa514583957e57d9ae86ebd0976.jpg",
+                name: "Execution",
+                apiname: "traitor_lord",
+                description: "Defeat the Traitor Lord",
+                unlockTimestamp: "1628154325",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/dad457a73d6612846c24053b76d41a2415ace552.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6d16598ac798eef2f915b7a9a2619be365c768b5.jpg",
+                name: "Connection",
+                apiname: "stag_station_half",
+                description: "Open half of Hallownest's Stag Stations",
+                unlockTimestamp: "1589744033",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/96d2673f15230fb83dd61384eb05458f1e0475bc.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/502e5ea328ab9c1e226544bd85a5771c12f2d723.jpg",
+                name: "Hope",
+                apiname: "stag_station_all",
+                description:
+                  "Open all of Hallownest's Stag Stations and discover the Stag Nest",
+                unlockTimestamp: "1590433566",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/f35cd67af303aa5d609cd1183e9eb29295b302b7.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/5a85ae25f9102058a0ac5bf541d08a510b466764.jpg",
+                name: "Teacher",
+                apiname: "teacher",
+                description: "Destroy Monomon the Teacher",
+                unlockTimestamp: "1590488452",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4e6e4ddce73c59559901d5bc7c86481d36a45988.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9a7f425e2757c29513ef86473b76fa093c9e7c0e.jpg",
+                name: "Watcher",
+                apiname: "watcher",
+                description: "Destroy Lurien the Watcher",
+                unlockTimestamp: "1590596812",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/460d5ab4af6dc0ff8c053c42649fa856949f01b4.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4fe01dcb8d9665de684eb7f8bda003ebfa938e82.jpg",
+                name: "Beast",
+                apiname: "beast",
+                description: "Destroy Herrah the Beast",
+                unlockTimestamp: "1590433566",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7e671e6e88cbe98b9dce57281980fea84a70de9b.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9db745f7f05c507991e224f2ca73e8d4af36a114.jpg",
+                name: "Cartographer",
+                apiname: "map",
+                description: "Acquire a map of each area",
+                unlockTimestamp: "1590488452",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/11d67c16467ae72066c2a3d33388325c65e9f7f7.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9f9fca30082bf6d65e8beb8cf5eb9955c0ed0bbf.jpg",
+                name: "Warrior",
+                apiname: "colosseum_1",
+                description: "Complete the Trial of the Warrior",
+                unlockTimestamp: "1590512142",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1e6a0d37618ba408e9c6ee4e77585ba1b69ee2c1.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4dce442376a62900d7064dbb04f66125678d0a99.jpg",
+                name: "Conqueror",
+                apiname: "colosseum_2",
+                description: "Complete the Trial of the Conqueror",
+                unlockTimestamp: "1590514308",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/29d538fcf448baafe7bb427d7788b416f0e2e00f.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/cf3a66560ca2f5a33665283ef854e518b7c8269e.jpg",
+                name: "Fool",
+                apiname: "colosseum_3",
+                description: "Complete the Trial of the Fool",
+                unlockTimestamp: "1628254062",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/39db59cf079011e52d49a621de9c540652f9d2d4.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/f62b5c62df1ccfcf68b18da288ee220e6bc34b2b.jpg",
+                name: "The Hollow Knight",
+                apiname: "ending_a",
+                description: "Defeat the Hollow Knight and become the Vessel",
+                unlockTimestamp: "1628170796",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/f63e26d501935466c304bf51159fd7144a157e69.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/d9a08fbe0afb16ffae9ebcd67c41bb73388a8c26.jpg",
+                name: "Sealed Siblings",
+                apiname: "ending_b",
+                description:
+                  "Defeat the Hollow Knight with Hornet by your side",
+                unlockTimestamp: "1628174337",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/8236b05d402215e4cd497af18248d19210d8fbea.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a43f645a3916af81765b548b85fe19e826ba4c42.jpg",
+                name: "Dream No More",
+                apiname: "ending_c",
+                description: "Defeat the Radiance and consume the light",
+                unlockTimestamp: "1628173470",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7695d5ad3fbe1c09af8feb887cd887846ec115b8.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e11d971b5f2c1e977fd5679ad15cbf40b2cb2a4a.jpg",
+                name: "Void",
+                apiname: "void",
+                description: "Remember the past and unite the Abyss",
+                unlockTimestamp: "1628171360",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/1f0cab3df919fd1d48aaacd2db3a4d10334bae1d.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/eba8bd5fc8e2d0b968bc2eb80433b8112a0d337c.jpg",
+                name: "Completion",
+                apiname: "completion",
+                description: "Achieve 100% game completion and finish the game",
+                unlockTimestamp: "1628170796",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/a26f0ff5d81835545c86d358c49a1a15bf74a299.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/f922c5de7ecfb30d3f7287e5fc472d669ec67fb8.jpg",
+                name: "Mortality",
+                apiname: "dream_soul_master_defeat",
+                description: "Defeat the Soul Tyrant",
+                unlockTimestamp: "1590355549",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/ea0958727cca3be88c8e200f7c3008fa01775ccd.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/53bbcbddf3f54a192796ae729edd1b56e9190fc0.jpg",
+                name: "Memory",
+                apiname: "white_defender",
+                description: "Defeat White Defender",
+                unlockTimestamp: "1628180577",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/982f6bd69415e06696e2fc414bc595700663ab37.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/549b3980b3a8d04368758d1bd59e007bf31cae1b.jpg",
+                name: "Grand Performance",
+                apiname: "grimm",
+                description: "Defeat Troupe Leader Grimm",
+                unlockTimestamp: "1628095362",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/11a174017fa3baa8169c362c0740deababb5c241.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/11e465df607e6c5338c241612abd25bd31f44986.jpg",
+                name: "Ritual",
+                apiname: "nightmare_grimm",
+                description:
+                  "Defeat the Nightmare King and complete the Ritual",
+                unlockTimestamp: "1628109873",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/9937e1fabc4f0ea2feebafd0b6f20c025b52aeec.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/de/de7c82107ecd84cc29b80497531ab7703c9703e3.jpg",
+                name: "Brotherhood",
+                apiname: "pantheon1",
+                description: "Complete the Pantheon of the Master",
+                unlockTimestamp: "1628328961",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/17f7d048decf5c20bab0a7bd11f2fac5caca050a.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/de/de7c82107ecd84cc29b80497531ab7703c9703e3.jpg",
+                name: "Inspiration",
+                apiname: "pantheon2",
+                description: "Complete the Pantheon of the Painter",
+                unlockTimestamp: "1628328961",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/382c7998e9b0b60a850d8bdf4c7f4a515a8b3481.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/de/de7c82107ecd84cc29b80497531ab7703c9703e3.jpg",
+                name: "Focus",
+                apiname: "pantheon3",
+                description: "Complete the Pantheon of the Sage",
+                unlockTimestamp: "1628332812",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/5857ae3a16211b09755b086f37f411adead38131.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/de/de7c82107ecd84cc29b80497531ab7703c9703e3.jpg",
+                name: "Soul & Shade",
+                apiname: "pantheon4",
+                description: "Complete the Pantheon of the Knight",
+                unlockTimestamp: "1628529815",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6b7a9e0fa49788c8ad8b56ddff75ac6250330b92.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/817c85e5f17fcab76b7d08979b0b076afbae509d.jpg",
+                name: "Pure Completion",
+                apiname: "completiongg",
+                description:
+                  "Achieve 112% game completion and finish the game.",
+                unlockTimestamp: "1628614735",
+                _closed: "1",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/95cb373a7b6309360f0f12fb18c993b013102f77.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/d273e50186bcfe48d2c0a07b20bd0efa8d843293.jpg",
+                name: "Speedrun 1",
+                apiname: "speedrun_1",
+                description: "Complete the game in under 10 hours",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/23dd899f5f08281f920f8db73e825884a5d9ebe8.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/426bfd57af49ba6c1e199f6dffb6393fdd87e98c.jpg",
+                name: "Speedrun 2",
+                apiname: "speedrun_2",
+                description: "Complete the game in under 5 hours",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/990df88f2440225e3c9ee49fc68233c1cc476807.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6efa8b82b7062070451e05e3569356d0a871dce3.jpg",
+                name: "Speed Completion",
+                apiname: "speed_completion",
+                description:
+                  "Achieve 100% game completion and finish the game in under 20 hours",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/c2a017099150e32a6d014c318d921a5a2deec181.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/af3a37a198cd9c0eabea41f92128c0f82b12b44b.jpg",
+                name: "Steel Soul",
+                apiname: "steelsoul",
+                description: "Finish the game in Steel Soul mode",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e3b29bb02a500134a1112b6f925820fd57fe8bf9.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/7e987f4454a86176979f97b80af057ba62689db2.jpg",
+                name: "Steel Heart",
+                apiname: "steelsoul_completion",
+                description:
+                  "Achieve 100% game completion and finish the game in Steel Soul mode",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/6ce519c75d52fd938a9212358682048d1298af3c.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/4d6373b0678c444e8ec841f81b4789d36438b8c3.jpg",
+                name: "Keen Hunter",
+                apiname: "hunter_1",
+                description:
+                  "Record all of Hallownest's creatures in the Hunter's Journal",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/f379e29e46d7edf73abd865cfb593d5fb1c6d4af.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/ed0b80dee5a89c1ac24907b4fa9048512d95e705.jpg",
+                name: "True Hunter",
+                apiname: "hunter_2",
+                description: "Receive the Hunter's Mark",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/781ccaf816379f217f53dfb86fb8c3a77daed9d1.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/b5ee4828c750bcf90def63aaffe4a1b27f418efd.jpg",
+                name: "Passing of the Age",
+                apiname: "mr_mushroom",
+                description: "Aid the Herald in moving on",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/8c26d557c3582c7784f338523316f56068e4426d.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/e9699d861ee64eb0b3bfd57f2571896be5db12b4.jpg",
+                name: "Dark Romance",
+                apiname: "grey_prince",
+                description: "Defeat Grey Prince Zote",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/d08c26c6b6b675dc3135b43fdd124eec41e351f6.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/c31aefeb1a1a66ea8df5973948938943e990def6.jpg",
+                name: "Banishment",
+                apiname: "banishment",
+                description: "Banish the Grimm Troupe from Hallownest",
+                _closed: "0",
+              },
+              {
+                iconClosed:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/367520/671c16432f460cdd9eff88d5c01b4abc7cfe2703.jpg",
+                iconOpen:
+                  "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/de/de7c82107ecd84cc29b80497531ab7703c9703e3.jpg",
+                name: "Embrace the Void",
+                apiname: "endingd",
+                description:
+                  "Ascend the Pantheon of Hallownest and take your place at its peak",
+                _closed: "0",
+              },
+            ],
+          },
+        },
+      };
+    </script>
+
+    <script>
+      const achievements =
+        steamResponse.playerstats.achievements.achievement.map((x) => ({
+          name: x.name,
+          description: x.description,
+          unlockTimestamp: x.unlockTimestamp,
+          closed: x._closed === "1",
+          image: x._closed === "1" ? x.iconClosed : x.iconOpen,
+        }));
+
+      const convertTimestamp = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+        return `Unlocked ${date.toLocaleDateString()}`;
+        // @ ${date.toLocaleTimeString()}`
+      };
+
+      const fillTemplate = (achievement) => {
+        const clone = document.importNode(template.content, true);
+        const td = clone.querySelectorAll("section");
+        td[0].firstElementChild.src = achievement.image;
+        td[1].textContent = achievement.description;
+        td[2].textContent = achievement.closed
+          ? convertTimestamp(achievement.unlockTimestamp)
+          : "";
+        return clone;
+      };
+
+      const tbody = document.querySelector("#achievementBody");
+      const template = document.querySelector("#achievementRow");
+      const progress = document.querySelector("#progress");
+
+      achievements.map(fillTemplate).forEach((clone) => {
+        tbody.appendChild(clone);
+      });
+
+      const closedCount = achievements.filter((x) => x.closed).length;
+      const totalCount = achievements.length;
+      const percentCount = Math.round((closedCount / totalCount) * 100);
+      progress.textContent = `${closedCount} of ${totalCount} (${percentCount}%) achievements earned:`;
+      percent.style.width = `${percentCount}%`;
+      
+    </script>
+  </body>
+</html>
