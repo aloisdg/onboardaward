@@ -335,9 +335,9 @@
           const localButton = document.importNode(askAFriend.content, true);
 
           localButton.querySelector("img").src = achievement.type.buddyImage;
-          localButton
-            .querySelector("#ask")
-            .setAttribute("data-mail", achievement.type.buddy);
+          const askButton = localButton
+            .querySelector("#ask");
+          askButton.setAttribute("data-mail", achievement.type.buddy);
           localButton.querySelector("#done").onclick = (e) => {
             const li = e.target.parentElement.parentElement;
             li.parentElement.insertBefore(
@@ -353,6 +353,12 @@
           };
           col[2].appendChild(localButton);
           col[0].firstElementChild.style.filter = "grayscale(1)";
+
+          askButton.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.setAttribute('href', `mailto:${achievement.type.buddy}?subject=Need help on ${achievement.description}`);
+            link.click();            
+          });
         }
         return clone;
       };
