@@ -342,11 +342,11 @@
     </script>
 
     <script>
-      const id = Math.floor(Math.random() * 2);
-      avatar.src = people[id].image;
-      firstName.textContent = people[id].firstName;
-      title.textContent = people[id].title;
-      const achievements = people[id].achievements.map((x) => ({
+      const person = people[Math.floor(Math.random() * people.length)];
+      avatar.src = person.image;
+      firstName.textContent = person.firstName;
+      title.textContent = person.title;
+      const achievements = person.achievements.map((x) => ({
         description: x.description,
         unlockTimestamp: x.unlockTimestamp,
         closed: x._closed === "1",
